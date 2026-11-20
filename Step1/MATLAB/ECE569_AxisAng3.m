@@ -12,4 +12,12 @@ function [w,theta] = ECE569_AxisAng3(w_theta)
 
 % theta = ...
 % w = ...
+    if norm(w_theta) == 0
+        w = zeros(size(w_theta));
+        theta = 0;
+    else 
+        w = w_theta / norm(w_theta);
+        theta =norm(w_theta);
+    end 
+
 end

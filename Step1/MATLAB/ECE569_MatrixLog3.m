@@ -24,23 +24,29 @@ elseif ismembertol(trace(R), -1)
     if ~ismembertol(R(3,3),-1)
         % case (b.1) check r33 is not -1
         % w_hat = ...
+        w = (1 / sqrt(2 * (1 + R(3,3)))) * [R(1,3); R(2,3); 1 + R(3,3)];
 
     elseif ~ismembertol(R(2,2),-1)
         % case (b.2) check r22 is not -1
         % w_hat = ...
-
+        w = (1 / sqrt(2 * (1 + R(2,2)))) * [R(1,2); 1 + R(2,2); R(3,2)];
     else
         % case (b.3) check r11 is not -1
         % w_hat = ...
+        w = (1 / sqrt(2 * (1 + R(1,1)))) * [1 + R(1,1); R(2,1); R(3,1)];
     end
     
     % You must return a skew-symmetric matrix
     % w_hat_theta = ...
+    w_hat = [0 -w(3) w(2); w(3) 0 -w(1); -w(2) w(1) 0];
+    w_hat_theta = w_hat * theta;
 
 else
     % case (c) this condition runs in all other cases
     % theta = ...
     % w_hat = ...
+    theta = acos((trace(R) - 1) / 2);
+    w_hat = (1 / (2 * sin(theta))) * (R - R');
     w_hat_theta = w_hat*theta;
 end
 end
